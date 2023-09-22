@@ -1,0 +1,12 @@
+{
+  "init_images": [],
+  "sampler_name": "Euler a",
+  "seed": -1,
+  "batch_size": 1,
+  "steps": 30,
+  "n_iter": 1,
+  "cfg_scale": 7,
+  "width": 512,
+  "height": 512,
+  "alwayson_scripts": {}
+}

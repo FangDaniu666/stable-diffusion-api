@@ -1,0 +1,27 @@
+{
+  "sampler_name": "Euler a",
+  "batch_size": 1,
+  "steps": 25,
+  "width": 912,
+  "height": 912,
+  "alwayson_scripts": {
+    "controlnet": {
+      "args": [
+        {
+          "input_image": "",
+          "model": "control_v1p_sd15_qrcode_monster [a6e58995]",
+          "weight": 1.25,
+          "pixel_perfect": true
+        },
+        {
+          "input_image": "",
+          "model": "control_v1p_sd15_brightness [5f6aa6ed]",
+          "weight": 0.3,
+          "guidance_start": 0.45,
+          "guidance_end": 0.75,
+          "pixel_perfect": true
+        }
+      ]
+    }
+  }
+}
