@@ -20,7 +20,7 @@ public class ImageBase64Utils {
         } finally {
             inputStream.close();
         }
-        return "";
+        return null;
     }
 
 }

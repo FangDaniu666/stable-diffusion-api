@@ -11,10 +11,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SdUtils {
-    private static final String url = "http://127.0.0.1:7861";
+    private static final String url = "http://127.0.0.1:7861";  //sd地址
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
@@ -78,6 +79,10 @@ public class SdUtils {
         String base = null;
         try {
             base = ImageBase64Utils.image2Base(baseQRcode);
+            if (base != null) {
+                System.out.println(new File(baseQRcode).getParent());
+                ImageFileUtils.deleteImageFiles(new File(baseQRcode).getParent());
+            }
         } catch (IOException e) {
             System.err.println("Base QRcode Not Found");
         }

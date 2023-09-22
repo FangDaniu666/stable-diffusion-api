@@ -57,10 +57,10 @@ public  final class BaseQRcode {
         inputText.clear();
         inputText.sendKeys(text);
 
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         //点击Download按钮
         driver.findElement(By.xpath("//button[contains(.,'Download')]")).click();
-        Thread.sleep(10000);
+        Thread.sleep(3000);
         driver.quit();
     }
 
