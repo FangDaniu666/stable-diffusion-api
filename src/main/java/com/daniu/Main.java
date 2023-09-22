@@ -24,7 +24,8 @@ public class Main {
         //图生图
         //JsonNode imagesNode = SdUtils.img2img(prompt, negative_prompt,new File("src/main/resources/img2img.json"),"E:\\图片\\220906173918.jpg");
 
-        String downloadPath = "D:\\SD-Webui-Aki\\SDworkspace\\base";
+        //生成二维码
+        String downloadPath = "D:\\SD-Webui-Aki\\SDworkspace\\base";  //
         BaseQRcode.getBaseQRcode("https://www.baidu.com",downloadPath);
 
         List<File> imageFiles = ImageFileUtils.findImageFiles(downloadPath);
