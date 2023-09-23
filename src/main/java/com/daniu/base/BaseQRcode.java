@@ -57,23 +57,22 @@ public  final class BaseQRcode {
         driver.findElement(By.xpath("//input[@value='crystalize']")).click();
         WebElement crystalize = driver.findElement(By.xpath("(//input[@type='number'])[8]"));
         crystalize.clear();
-        crystalize.sendKeys("6.5");
-
-        //设置内容
-        WebElement inputText = driver.findElement(By.xpath("//textarea"));
-        inputText.clear();
-        inputText.sendKeys(text);*/
+        crystalize.sendKeys("6.5");*/
         logger.info("Generating basic QR code");
         WebElement qroptions = driver.findElement(By.xpath("(//input[@type='file'])[2]"));
         qroptions.sendKeys(System.getProperty("user.dir")+"\\src\\main\\resources\\config\\qroptions.json");
         driver.switchTo().alert().accept();
         //driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
+        //设置内容
+        WebElement inputText = driver.findElement(By.xpath("//textarea"));
+        inputText.clear();
+        inputText.sendKeys(text);
         Thread.sleep(1000);
         //点击Download按钮
         driver.findElement(By.xpath("//button[contains(.,'Download')]")).click();
         logger.info("Downloading basic QR code");
-        Thread.sleep(3000);
+        Thread.sleep(30000);
         driver.quit();
     }
 
