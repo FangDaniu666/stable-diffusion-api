@@ -1,6 +1,7 @@
 package com.daniu.base;
 
 import com.daniu.utils.ConfigReader;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,7 @@ public  final class BaseQRcode {
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://qrcode.antfu.me");
-        //点击L按钮
+        /*//点击L按钮
         driver.findElement(By.xpath("//input[@value='L']")).click();
         //点击180按钮
         driver.findElement(By.xpath("//input[@value='180']")).click();
@@ -61,15 +62,18 @@ public  final class BaseQRcode {
         //设置内容
         WebElement inputText = driver.findElement(By.xpath("//textarea"));
         inputText.clear();
-        inputText.sendKeys(text);
-
-        //driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        inputText.sendKeys(text);*/
         logger.info("Generating basic QR code");
+        WebElement qroptions = driver.findElement(By.xpath("(//input[@type='file'])[2]"));
+        qroptions.sendKeys(System.getProperty("user.dir")+"\\src\\main\\resources\\config\\qroptions.json");
+        driver.switchTo().alert().accept();
+        //driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+
         Thread.sleep(1000);
         //点击Download按钮
         driver.findElement(By.xpath("//button[contains(.,'Download')]")).click();
         logger.info("Downloading basic QR code");
-        Thread.sleep(3000);
+        Thread.sleep(300000);
         driver.quit();
     }
 

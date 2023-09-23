@@ -1,4 +1,5 @@
 import com.daniu.base.BaseQRcode;
+import com.daniu.utils.ConfigReader;
 import com.daniu.utils.ImageBase64Utils;
 import org.jetbrains.annotations.TestOnly;
 import org.openqa.selenium.WebDriver;
