@@ -1,5 +1,6 @@
 package com.daniu.api;
 
+import com.daniu.base.BaseQRcode;
 import com.daniu.utils.ImageBase64Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +9,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import okhttp3.*;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SdUtils {
+    private final static Logger logger = LoggerFactory.getLogger(SdUtils.class);
     private static final String url = "http://127.0.0.1:7861";  //sd地址
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -29,10 +33,11 @@ public class SdUtils {
         try {
             payload = (ObjectNode) objectMapper.readTree(file);
         } catch (IOException e) {
-            System.err.println("File Not Found");
+            logger.error("File Not Found");
         }
         payload.put("prompt", prompt);
         payload.put("negative_prompt", negative_prompt);
+        logger.info("Generating image");
 
         return getJsonNode(payload);
     }
@@ -46,16 +51,18 @@ public class SdUtils {
         payload.put("prompt", prompt);
         payload.put("negative_prompt", negative_prompt);
 
+        logger.info("Setting init image");
         String base = null;
         try {
             base = ImageBase64Utils.image2Base(img);
         } catch (IOException e) {
-            System.err.println("init_images is null");
+            logger.error("init_images is null");
         }
         ArrayNode initImages = objectMapper.createArrayNode();
         initImages.add(base);
         payload.set("init_images", initImages);
 
+        logger.info("Generating image");
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), payload.toString());
         Request request = new Request.Builder()
                 .url(url + "/sdapi/v1/img2img")
@@ -71,7 +78,7 @@ public class SdUtils {
         try {
             payload = (ObjectNode) objectMapper.readTree(file);
         } catch (IOException e) {
-            System.err.println("File Not Found");
+            logger.error("File Not Found");
         }
         payload.put("prompt", prompt);
         payload.put("negative_prompt", negative_prompt);
@@ -80,14 +87,14 @@ public class SdUtils {
         try {
             base = ImageBase64Utils.image2Base(baseQRcode);
             if (base != null) {
-                System.out.println(new File(baseQRcode).getParent());
                 ImageFileUtils.deleteImageFiles(new File(baseQRcode).getParent());
             }
         } catch (IOException e) {
-            System.err.println("Base QRcode Not Found");
+            logger.error("Base QRcode Not Found");
         }
         ((ObjectNode) payload.at("/alwayson_scripts/controlnet/args/0")).put("input_image", base);
         ((ObjectNode) payload.at("/alwayson_scripts/controlnet/args/1")).put("input_image", base);
+        logger.info("Generating QRcode");
 
         return getJsonNode(payload);
     }
@@ -126,7 +133,7 @@ public class SdUtils {
             return jsonNode.get("images");
         } catch (IOException e) {
             e.getMessage();
-            System.err.println("images is null");
+            logger.error("images is null");
         }
         return null;
     }

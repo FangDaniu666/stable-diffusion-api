@@ -5,14 +5,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public  final class BaseQRcode {
+    private final static Logger logger = LoggerFactory.getLogger(BaseQRcode.class);
 
     public static void getBaseQRcode(String text,String downloadPath) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\fangd\\.cache\\selenium\\chromedriver\\win64\\116.0.5845.96\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");//chromedriver.exe版本应和Chrome版本一致
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--incognito");
@@ -20,8 +24,8 @@ public  final class BaseQRcode {
         options.setExperimentalOption("prefs", getDownloadPrefs(downloadPath));
 
         WebDriver driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://qrcode.antfu.me");
-        //Thread.sleep(5000);
         //点击L按钮
         driver.findElement(By.xpath("//input[@value='L']")).click();
         //点击180按钮
@@ -57,9 +61,12 @@ public  final class BaseQRcode {
         inputText.clear();
         inputText.sendKeys(text);
 
+        //driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        logger.info("Generating basic QR code");
         Thread.sleep(1000);
         //点击Download按钮
         driver.findElement(By.xpath("//button[contains(.,'Download')]")).click();
+        logger.info("Downloading basic QR code");
         Thread.sleep(3000);
         driver.quit();
     }
