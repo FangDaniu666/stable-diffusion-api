@@ -1,6 +1,7 @@
 package com.daniu.api;
 
 import com.daniu.base.BaseQRcode;
+import com.daniu.utils.ConfigReader;
 import com.daniu.utils.ImageBase64Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,12 +15,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SdUtils {
     private final static Logger logger = LoggerFactory.getLogger(SdUtils.class);
-    private static final String url = "http://127.0.0.1:7861";  //sd地址
+    private static final String url = ConfigReader.readValue("sdurl");  //sd地址
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
@@ -73,7 +73,9 @@ public class SdUtils {
         return getResponse(request);
     }
 
-    public static JsonNode generateArtQRCode(String prompt, String negative_prompt, File file, String baseQRcode) {
+    public static JsonNode generateArtQRCode(String prompt, String negative_prompt, File file, String url) throws InterruptedException {
+        BaseQRcode.getBaseQRcode(url);
+        String baseQRcode = ImageFileUtils.findImageFiles().get(0).getAbsolutePath();
         ObjectNode payload = objectMapper.createObjectNode();
         try {
             payload = (ObjectNode) objectMapper.readTree(file);
@@ -87,7 +89,7 @@ public class SdUtils {
         try {
             base = ImageBase64Utils.image2Base(baseQRcode);
             if (base != null) {
-                ImageFileUtils.deleteImageFiles(new File(baseQRcode).getParent());
+                ImageFileUtils.deleteImageFiles();
             }
         } catch (IOException e) {
             logger.error("Base QRcode Not Found");

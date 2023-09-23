@@ -1,13 +1,15 @@
 package com.daniu.api;
 
+import com.daniu.utils.ConfigReader;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageFileUtils {
-    public static List<File> findImageFiles(String basePath) {
+    public static List<File> findImageFiles() {
         List<File> imageFiles = new ArrayList<>();
-        File baseDir = new File(basePath);
+        File baseDir = new File(ConfigReader.readValue("downloadPath"));
 
         if (baseDir.exists() && baseDir.isDirectory()) {
             findImageFilesRecursive(baseDir, imageFiles);
@@ -16,8 +18,8 @@ public class ImageFileUtils {
         return imageFiles;
     }
 
-    public static void deleteImageFiles(String basePath) {
-        List<File> imageFiles = findImageFiles(basePath);
+    public static void deleteImageFiles() {
+        List<File> imageFiles = findImageFiles();
 
         for (File file : imageFiles) {
             file.delete();

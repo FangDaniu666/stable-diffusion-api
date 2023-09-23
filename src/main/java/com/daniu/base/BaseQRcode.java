@@ -1,5 +1,6 @@
 package com.daniu.base;
 
+import com.daniu.utils.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,8 +16,9 @@ import java.util.concurrent.TimeUnit;
 public  final class BaseQRcode {
     private final static Logger logger = LoggerFactory.getLogger(BaseQRcode.class);
 
-    public static void getBaseQRcode(String text,String downloadPath) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");//chromedriver.exe版本应和Chrome版本一致
+    public static void getBaseQRcode(String text) throws InterruptedException {
+        String downloadPath = ConfigReader.readValue("downloadPath");
+        System.setProperty("webdriver.chrome.driver", ConfigReader.readValue("chromedriver"));//chromedriver.exe版本应和Chrome版本一致
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--incognito");

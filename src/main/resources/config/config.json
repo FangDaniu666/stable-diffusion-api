@@ -1,0 +1,6 @@
+{
+  "sdurl": "http://127.0.0.1:7861",
+  "downloadPath": "D:\\IntelliJ IDEA\\stable-diffusion-api\\src\\main\\resources\\base",
+  "chromedriver": "src\\main\\resources\\chromedriver.exe"
+
+}

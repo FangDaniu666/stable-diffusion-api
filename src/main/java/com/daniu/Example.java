@@ -3,6 +3,7 @@ package com.daniu;
 import com.daniu.api.ImageFileUtils;
 import com.daniu.api.SdUtils;
 import com.daniu.base.BaseQRcode;
+import com.daniu.utils.ConfigReader;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.imageio.ImageIO;
@@ -24,15 +25,10 @@ public class Example {
         //JsonNode imagesNode = SdUtils.img2img(prompt, negative_prompt,new File("src/main/resources/img2img.json"),"src/main/resources/cxk.jpeg");
 
         //生成二维码
-        String downloadPath = "D:\\IntelliJ IDEA\\stable-diffusion-api\\src\\main\\resources\\base";  //
-        BaseQRcode.getBaseQRcode("https://www.baidu.com",downloadPath);
+        File file = new File("src/main/resources/qrcode.json");
+        JsonNode imagesNode = SdUtils.generateArtQRCode(prompt, negative_prompt, file,"https://www.baidu.com");
 
-        List<File> imageFiles = ImageFileUtils.findImageFiles(downloadPath);
-        String baseQRcode = imageFiles.get(0).getAbsolutePath();
-
-        JsonNode imagesNode = SdUtils.generateArtQRCode(prompt, negative_prompt, new File("src/main/resources/qrcode.json"), baseQRcode);
-
-
+        //输出生成的图片
         int imageNum = 0;
         for (JsonNode imageNode : imagesNode) {
             String response = SdUtils.getPngResponse(imageNode);
