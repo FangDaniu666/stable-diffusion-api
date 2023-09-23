@@ -73,7 +73,7 @@ public  final class BaseQRcode {
         //点击Download按钮
         driver.findElement(By.xpath("//button[contains(.,'Download')]")).click();
         logger.info("Downloading basic QR code");
-        Thread.sleep(300000);
+        Thread.sleep(3000);
         driver.quit();
     }
 
