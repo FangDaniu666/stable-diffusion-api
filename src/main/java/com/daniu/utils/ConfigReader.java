@@ -15,7 +15,6 @@ public class ConfigReader {
 
     public static String readValue(String arg) {
         // 读取JSON文件
-        logger.info("Loading configuration file");
         ObjectNode payload = objectMapper.createObjectNode();
         try {
             File configFile = new File("src/main/resources/config/config.json");
@@ -23,7 +22,6 @@ public class ConfigReader {
         } catch (IOException e) {
             logger.error("Config File Not Found");
         }
-        logger.info("Configuration file loading completed");
         return payload.findValue(arg).asText();
     }
 

@@ -26,7 +26,7 @@ public class Example {
 
         //生成二维码
         File file = new File("src/main/resources/qrcode.json");
-        JsonNode imagesNode = SdUtils.generateArtQRCode(prompt, negative_prompt, file,"https://www.baidu.com");
+        JsonNode imagesNode = SdUtils.generateArtQRCode(prompt, negative_prompt, file,"https://github.com/FangDaniu666/stable-diffusion-api");
 
         //输出生成的图片
         int imageNum = 0;
