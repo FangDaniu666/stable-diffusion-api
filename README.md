@@ -5,7 +5,7 @@
 
 在使用之前，需要进行一些环境配置。下面是配置步骤：
 
-1. 安装[controlnet](https://github.com/Mikubill/sd-webui-controlnet)插件。
+1. 安装[controlnet](https://github.com/Mikubill/sd-webui-controlnet)插件,以及controlnet模型[control_v1p_sd15_qrcode_monster](https://huggingface.co/monster-labs/control_v1p_sd15_qrcode_monster)和[control_v1p_sd15_brightness](https://huggingface.co/ioclab/ioc-controlnet/tree/main/models)。
 
 2. 配置stable diffusion地址：在`config.json`文件中的`sdurl`属性中配置stable diffusion的地址。将地址设置为你的stable diffusion服务的地址。
 
